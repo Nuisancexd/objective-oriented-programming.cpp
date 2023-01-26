@@ -1,0 +1,102 @@
+#include <iostream>
+
+class Clown
+{
+private:
+	int count;
+
+	float a;
+	int b;
+public:
+	Clown() : count(0) { }
+	Clown(int n) : count(n) { }
+
+	int get_count()
+	{
+		return count;
+	}
+	Clown operator++()
+	{
+		return Clown(++count);
+	}
+	Clown operator++(int)
+	{
+		return Clown(count++);
+	}
+
+	Clown(float s, int v) : a(s), b(v) {}
+	Clown operator*(Clown);
+	void print();
+	void print_a();
+
+	void operator+=(Clown);
+};
+
+Clown Clown::operator*(Clown c) 
+{
+	float time = a * c.a;
+	int pay = b * c.b;
+
+	return Clown(time, pay);
+
+}
+
+void Clown::print()
+{
+	std::cout << a << " " << b << std::endl;
+	Clown operator*(Clown);
+}
+
+void Clown::print_a()
+{
+	std::cout << a << " " << b << std::endl;
+}
+
+void Clown::operator+=(Clown c)
+{
+	a += c.a;
+	b += c.b;
+}
+
+
+class Interface
+{
+public:
+	void inc_operator()
+	{
+		Clown c1, c2;
+		std::cout << c1.get_count() << std::endl;
+		std::cout << c2.get_count() << std::endl;
+
+		++c1;
+		c2 = ++c1;
+		c2 = c1++;
+
+		std::cout << c1.get_count() << std::endl;
+		std::cout << c2.get_count() << std:: endl;
+	}
+
+	void mult_operator()
+	{
+		Clown c1(8.30, 25), c2(22, 22), cs;
+		
+		cs = c1 * c2;
+
+		cs.print();	
+	}
+
+	void assignment()
+	{
+		Clown c1(2, 3), c2(3, 2);
+		c1 += c2;
+		c1.print_a();
+	}
+};
+
+int main()
+{
+	Interface in;
+	in.inc_operator();
+	in.mult_operator();
+	in.assignment();
+}
