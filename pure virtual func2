@@ -1,0 +1,91 @@
+
+#include <iostream>
+
+class Publication
+{
+protected:
+	char name[40];
+public:
+	void set_name()
+	{
+		std::cout << "Введите имя: " << std::endl;
+		std::cin >> name;
+	}
+	void get_name()
+	{
+		std::cout << name << std::endl;
+	}
+
+	virtual void get_data() = 0;
+	virtual bool is_outstanding() = 0;
+};
+
+class amateur : public Publication
+{
+private:
+	int num_publications;
+public:
+	void get_data()
+	{
+		Publication::set_name();
+		std::cout << "Количество публикаций: ";
+		std::cin >> num_publications;
+	}
+	bool is_outstanding()
+	{
+		return (num_publications > 5) ? true : false;
+	}
+};
+
+class professional : public Publication
+{
+private:
+	int num_publications;
+public:
+	void get_data()
+	{
+		Publication::set_name();
+		std::cout << "Количество публикаций: ";
+		std::cin >> num_publications;
+	}
+	bool is_outstanding()
+	{
+		return (num_publications > 10) ? true : false;
+	}
+};
+
+
+int main()
+{
+	setlocale(LC_CTYPE, "rus");
+	Publication* publ[100];
+	char choice;
+	int n = 0;
+	do
+	{
+		std::cout << "Любитель(1) или Профессор?(2): ";
+		std::cin >> choice;
+		if (choice == '1')
+		{
+			publ[n] = new amateur;
+		}
+		else
+		{
+			publ[n] = new professional;
+		}
+		publ[n++]->get_data();
+		std::cout << "Ввести еще? (y/n) ";
+		std::cin >> choice;
+	} while (choice == 'y');
+
+	for (int i = 0; i < n; ++i)
+	{
+		publ[i]->get_name();
+		if (publ[i]->is_outstanding())
+		{
+			std::cout << "Выдающийся публицист!" << std::endl;
+		}
+	}
+	return 0;
+}
+
