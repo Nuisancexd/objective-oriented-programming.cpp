@@ -1,0 +1,114 @@
+#include <iostream>
+
+class Parent
+{
+public:
+	int data;
+public:
+	Parent() : data(2) { }
+
+	virtual void f() 
+	{
+		std::cout << "Parent::f()" << std::endl;
+	}
+	virtual void fp()
+	{
+		std::cout << "Parent::fp()" << std::endl;
+	}
+};
+
+class Child1 : virtual public Parent
+{
+public:
+	int data1;
+public:
+	Child1() : data1(3){ }
+
+	virtual void f()
+	{
+		std::cout << "Child1::f()" << std::endl;
+	}
+	virtual void f2()
+	{
+		std::cout << "Child1::f2()" << std::endl;
+	}
+	virtual void f3()
+	{
+		std::cout << "Child1::f3()" << std::endl;
+	}
+};
+
+class Child2 : virtual public Parent
+{
+public:
+	int data2;
+public:
+	Child2() : data2(4) { }
+
+	virtual void f()
+	{
+		std::cout << "Child2::f()" << std::endl;
+	}
+	virtual void f2()
+	{
+		std::cout << "Child2::f2()" << std::endl;
+	}
+	virtual void f3()
+	{
+		std::cout << "Child2::f3()" << std::endl;
+	}
+};
+
+class GrandChild :public Child1, public Child2
+{
+private:
+	int sum;
+
+public:
+	GrandChild() : sum(0) { }
+	
+	int get_sum()
+	{
+		sum += data + data1 + data2;
+		return sum;
+	}
+
+	int get_data_parent()
+	{
+		return data;
+	}
+
+	virtual void f()
+	{
+		std::cout << "GrandChild::f()" << std::endl;
+	}
+	virtual void f2()
+	{
+		std::cout << "GrandChild::f2()" << std::endl;
+	}
+	virtual void f3()
+	{
+		std::cout << "GrandChild::f3()" << std::endl;
+	}
+};
+
+
+int main()
+{
+	int* array= new int;
+	GrandChild gc;
+	
+	std::cout << "data parent: " << gc.get_data_parent() << std::endl;
+	std::cout << "sum: " << gc.get_sum() << std::endl;
+
+	gc.f();
+	gc.fp();
+
+	Child1 ch1;
+	ch1.f();
+	ch1.fp();
+
+	Child2 ch2;
+	ch2.f();
+	ch2.fp();
+}
