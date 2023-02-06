@@ -1,24 +1,37 @@
-﻿#include <iostream>
+#include <iostream>
 
-class Vec
+
+class beta;
+
+class alpha
 {
 private:
-	int length;
+	int data;
 public:
-	Vec() : length(0) { }
-	friend int print_length(Vec);
+	alpha() : data(3) { }
+
+	friend int friend_func(alpha, beta);
 };
 
-int print_length(Vec v) // имеет доступ к закрытым членам - переменным и функциям.
+class beta
 {
-	v.length += 10;
-	return v.length;
+private:
+	int data;
+public:
+	beta() : data(7) { }
+
+	friend int friend_func(alpha, beta);
+};
+
+int friend_func(alpha a, beta b)
+{
+	return (a.data + b.data);
 }
 
 int main()
 {
-	Vec v;
-	std::cout << "Length of vector: " << print_length(v) << std::endl;
-
+	alpha aa;
+	beta bb;
+	std::cout << friend_func(aa, bb) << std::endl;
 	return 0;
 }
