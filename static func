@@ -1,0 +1,42 @@
+#include <iostream>
+
+class Person
+{
+private:
+	static int total;
+	int id;
+public:
+	Person()
+	{
+		total++;
+		id = total;
+	}
+	~Person()
+	{
+		total--;
+		std::cout << "Удаление ID " << id << std::endl;
+	}
+	static void showtotal()
+	{
+		std::cout << "Всего: " << total << std::endl;
+	}
+	void showid()
+	{
+		std::cout << "ID: " << id << std::endl;
+	}
+};
+
+int Person::total = 0;
+
+
+int main()
+{
+	Person g1;
+	Person::showtotal();
+	Person g2, g3;
+	Person::showtotal();
+	g1.showid();
+	g2.showid();
+	g3.showid();
+	return 0;
+}
